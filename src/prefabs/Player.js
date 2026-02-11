@@ -4,12 +4,12 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
-        this.body.setSize(this.width / 2, this.height - 2)
+        this.body.setSize(this.width, this.height)
         this.body.setCollideWorldBounds(true)
 
         // set custom player properties
         this.direction = direction 
-        this.playerVelocity = 200    // in pixels
+        this.playerVelocity = 150    // in pixels
         this.dashCooldown = 300    // in ms
         this.hurtTimer = 250  
 

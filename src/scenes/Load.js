@@ -5,9 +5,9 @@ class Load extends Phaser.Scene {
 
     preload(){
         this.load.path = "./assets/"
-        this.load.spritesheet('player', 'player.png', {
-            frameWidth: 64,
-            frameHeight: 64,
+        this.load.spritesheet('player', 'gamespritesheet.png', {
+            frameWidth: 32,
+            frameHeight: 32,
         })
     }
 
@@ -16,27 +16,27 @@ class Load extends Phaser.Scene {
 
         this.anims.create({
             key: 'walk-down',
-            frameRate: 8,
+            frameRate: 6,
             repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 1, end: 1 }),
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
         })
         this.anims.create({
             key: 'walk-right',
-            frameRate: 8,
+            frameRate: 6,
             repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 1, end: 1 }),
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
         })
         this.anims.create({
             key: 'walk-up',
-            frameRate: 8,
+            frameRate: 6,
             repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 1, end: 1 }),
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
         })
         this.anims.create({
             key: 'walk-left',
-            frameRate: 8,
+            frameRate: 6,
             repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 1, end: 1 }),
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
         })
 
         this.scene.start('playScene')
