@@ -5,40 +5,33 @@ class Load extends Phaser.Scene {
 
     preload(){
         this.load.path = "./assets/"
-        this.load.spritesheet('player', 'gamespritesheet.png', {
+        this.load.spritesheet('player', 'playerspritesheet.png', {
             frameWidth: 32,
             frameHeight: 32,
         })
-        this.load.image('map', 'naturebackground.png')
+        
+        
+        this.load.image('tilesetImg', 'tilesheet.png')
+        this.load.tilemapTiledJSON('tilemapJson', 'tilemap.json')
+        
     }
 
     create(){
-        
+        this.anims.create({
+            key:'idle',
+            frameRate: 4,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', {start: 0, end:3})
+        })
 
         this.anims.create({
-            key: 'walk-down',
+            key: 'jump',
             frameRate: 4,
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
+            repeat: 0,
+            frames: this.anims.generateFrameNumbers('player', {frames: [4, 5, 5, 5]})
+
         })
-        this.anims.create({
-            key: 'walk-right',
-            frameRate: 4,
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
-        })
-        this.anims.create({
-            key: 'walk-up',
-            frameRate: 4,
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
-        })
-        this.anims.create({
-            key: 'walk-left',
-            frameRate: 4,
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
-        })
+        
 
         this.scene.start('playScene')
     }

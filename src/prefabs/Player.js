@@ -10,12 +10,11 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         // set custom player properties
         this.direction = direction 
         this.playerVelocity = 150    // in pixels
-        this.dashCooldown = 300    // in ms
-        this.hurtTimer = 250  
+        
 
         scene.playerFSM = new StateMachine('idle', {
             idle: new IdleState(),
-            move: new MoveState(),
+            jump: new JumpState(),
         }, [scene, this])
     }
     
@@ -23,51 +22,33 @@ class Player extends Phaser.Physics.Arcade.Sprite{
 
 class IdleState extends State {
     enter(scene, player) {
-        player.setVelocity(0)
-        player.anims.play(`walk-${player.direction}`)
-        player.anims.stop()
+        player.anims.play('idle')
+        player.isGrounded = true
     }
-
     execute(scene, player){
-        const { left, right, up, down } = scene.keys
-
-        if(left.isDown || right.isDown || up.isDown || down.isDown ) {
-            this.stateMachine.transition('move')
+        const{space} = scene.keys
+        
+        if(Phaser.Input.Keyboard.JustDown(space) && player.body.blocked.down && player.isGrounded){
+            this.stateMachine.transition('jump')
             return
         }
+        
     }
-    
 }
 
-class MoveState extends State {
 
 
+class JumpState extends State {
+    enter(scene, player){
+        player.anims.play('jump')
+        player.setVelocityY(-player.playerVelocity / 2)
+        player.isGround = false
+       
+    }
     execute(scene, player){
-        const { left, right, up, down } = scene.keys
-
-        if(!(left.isDown || right.isDown || up.isDown || down.isDown) ) {
+        if(player.body.blocked.down){
             this.stateMachine.transition('idle')
-            return
         }
-        let moveDirection = new Phaser.Math.Vector2(0, 0)
-        if(up.isDown) {
-            moveDirection.y = -1
-            player.direction = 'up'
-        } else if(down.isDown) {
-            moveDirection.y = 1
-            player.direction = 'down'
-        }
-        if(left.isDown) {
-            moveDirection.x = -1
-            player.direction = 'left'
-        } else if(right.isDown) {
-            moveDirection.x = 1
-            player.direction = 'right'
-        }
-        // normalize movement vector, update player position, and play proper animation
-        moveDirection.normalize()
-        player.setVelocity(player.playerVelocity * moveDirection.x, player.playerVelocity * moveDirection.y)
-        player.anims.play(`walk-${player.direction}`, true)
     }
     
 }
