@@ -9,8 +9,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
 
         // set custom player properties
         this.direction = direction 
-        this.playerVelocity = 150    // in pixels
-        
+        this.playerVelocity = 100     // in pixels
+          
 
         scene.playerFSM = new StateMachine('idle', {
             idle: new IdleState(),
@@ -40,9 +40,9 @@ class IdleState extends State {
 
 class JumpState extends State {
     enter(scene, player){
-        player.anims.play('jump')
-        player.setVelocityY(-player.playerVelocity / 2)
-        player.isGround = false
+        player.anims.play('jump') 
+        player.setVelocityY(-player.playerVelocity * 1.5)
+        player.isGrounded = false
        
     }
     execute(scene, player){

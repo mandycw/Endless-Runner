@@ -13,7 +13,7 @@ class Load extends Phaser.Scene {
         
         this.load.image('tilesetImg', 'tilesheet.png')
         this.load.tilemapTiledJSON('tilemapJson', 'tilemap.json')
-        
+        this.load.image('platform', 'platform.png')
     }
 
     create(){
@@ -31,6 +31,8 @@ class Load extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('player', {frames: [4, 5, 5, 5]})
 
         })
+
+        
         
 
         this.scene.start('playScene')
