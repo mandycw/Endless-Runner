@@ -14,6 +14,11 @@ class Load extends Phaser.Scene {
         this.load.image('tilesetImg', 'tilesheet.png')
         this.load.tilemapTiledJSON('tilemapJson', 'tilemap.json')
         this.load.image('platform', 'platform.png')
+        this.load.audio('menuStart', 'start.wav')
+        this.load.audio('select', 'select.wav')
+        this.load.audio('exit', 'lowblip.wav')
+        this.load.audio('gameover', 'gameover.wav')
+        this.load.audio('bgmusic', 'bgmusic.wav')
     }
 
     create(){
@@ -28,7 +33,7 @@ class Load extends Phaser.Scene {
             key: 'jump',
             frameRate: 4,
             repeat: 0,
-            frames: this.anims.generateFrameNumbers('player', {frames: [4, 5, 5, 5]})
+            frames: this.anims.generateFrameNumbers('player', {frames: [5, 4, 4, 5, 5]})
 
         })
 

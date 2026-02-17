@@ -22,33 +22,38 @@ class Menu extends Phaser.Scene{
 
         this.directionsText = this.add.text(160, 160, 
             'Press SPACE to jump\n\nPress ESC to return', 
-            { fontSize: '20px', align: 'center', wordWrap: { width: 320 } }
+            { fontSize: '16px', align: 'center', wordWrap: { width: 320 } }
         ).setOrigin(0.5);
         this.directionsText.setVisible(false)
 
         this.creditsText = this.add.text(160, 160, 
             'Credits: \nPress ESC to return', 
-            { fontSize: '20px', align: 'center', wordWrap: { width: 320 } }
+            { fontSize: '16px', align: 'center', wordWrap: { width: 320 } }
         ).setOrigin(0.5);
         this.creditsText.setVisible(false)
 
         this.input.keyboard.on('keydown-ENTER', () => {
+            this.sound.play('menuStart')
             this.scene.start('playScene')
+
         })
 
         this.input.keyboard.on('keydown-D', () => {
+            this.sound.play('select')
             this.menuTextGroup.setVisible(false)
             this.directionsText.setVisible(true)
             this.creditsText.setVisible(false)
         })
 
         this.input.keyboard.on('keydown-ESC', () => {
+            this.sound.play('exit')
             this.menuTextGroup.setVisible(true)
             this.directionsText.setVisible(false)
             this.creditsText.setVisible(false)
         })
 
         this.input.keyboard.on('keydown-C', () => {
+            this.sound.play('select')
             this.menuTextGroup.setVisible(false)
             this.directionsText.setVisible(false)
             this.creditsText.setVisible(true)

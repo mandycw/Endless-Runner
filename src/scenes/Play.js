@@ -13,7 +13,9 @@ class Play extends Phaser.Scene{
     
 
     create(){
-        
+        this.sound.play('bgmusic', {
+        loop: true,
+     })
         this.physics.world.gravity.y = 250 
         const map = this.add.tilemap('tilemapJson')
         const tileset = map.addTilesetImage('tilesheet', 'tilesetImg')
@@ -59,7 +61,7 @@ class Play extends Phaser.Scene{
         
 
         this.platformSpeed = -50
-        this.addSpeed = -5
+        this.addSpeed = -10
 
         this.difficultyTimer = this.time.addEvent({
             delay: 15000,
@@ -89,6 +91,8 @@ class Play extends Phaser.Scene{
         }
         this.cleanUpPlatforms()
         if(this.player.y > 600){ 
+            this.sound.stopAll()
+            this.sound.play('gameover')
             this.gameOver = true
             let currentHigh = this.registry.get('highScore');
             let finalScore = Math.floor(this.score / 10);
@@ -105,7 +109,7 @@ class Play extends Phaser.Scene{
     addPlatform(x, y){
         const platform = this.platforms.create(x, y, 'platform')
     
-        platform.body.setSize(platform.width, platform.height / 2)
+        platform.body.setSize(platform.width/2, platform.height / 2)
         platform.body.setVelocityX(this.platformSpeed)
 
         platform.body.checkCollision.left = false
