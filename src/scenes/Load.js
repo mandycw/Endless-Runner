@@ -32,9 +32,8 @@ class Load extends Phaser.Scene {
 
         })
 
+        this.registry.set('highScore', 0)
         
-        
-
         this.scene.start('menuScene')
     }
 }

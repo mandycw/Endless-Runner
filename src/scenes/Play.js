@@ -39,7 +39,6 @@ class Play extends Phaser.Scene{
             this.physics.world.debugGraphic.clear() 
         }, this)
 
-        document.getElementById('info').innerHTML = ' Arrows: move '
         this.spawnPlatform = this.physics.add.image(playerSpawn.x , playerSpawn.y + 32, 'platform')
         this.spawnPlatform.body.setAllowGravity(false)
         this.spawnPlatform.body.setImmovable(true)
@@ -72,19 +71,33 @@ class Play extends Phaser.Scene{
         })
         
         this.gameOver = false
+
+        this.score = 0
+        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '14px', fill: '#000000'})
         
     }
-    
 
     update(){
         
         this.playerFSM.step() 
+        if (!this.gameOver) {
+        this.score += 1;
+        this.scoreText.setText('Score: ' + Math.floor(this.score / 10));
+    }
         if(this.player.body.velocity.y < 0){
             this.spawnPlatform.destroy()
         }
         this.cleanUpPlatforms()
         if(this.player.y > 600){ 
-            this.scene.start('gameOverScene')
+            this.gameOver = true
+            let currentHigh = this.registry.get('highScore');
+            let finalScore = Math.floor(this.score / 10);
+        
+            if (finalScore > currentHigh) {
+                this.registry.set('highScore', finalScore);
+            }
+
+            this.scene.start('gameOverScene', { score: finalScore })
         }
     }
 
