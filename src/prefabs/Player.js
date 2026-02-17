@@ -41,7 +41,7 @@ class IdleState extends State {
 class JumpState extends State {
     enter(scene, player){
         player.anims.play('jump') 
-        player.setVelocityY(-player.playerVelocity * 1.5)
+        player.setVelocityY(-player.playerVelocity * 1.6)
         player.isGrounded = false
        
     }
