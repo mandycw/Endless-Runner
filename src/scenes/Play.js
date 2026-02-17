@@ -23,7 +23,7 @@ class Play extends Phaser.Scene{
  
         const playerSpawn = map.findObject('Spawnpoint', obj => obj.name === 'SpawnPoint')
         this.player = new Player(this, playerSpawn.x, playerSpawn.y, 'player', 0, 'right')
-        this.player.body.setCollideWorldBounds(true)
+        this.player.body.setCollideWorldBounds(false)
 
         
         
@@ -57,7 +57,7 @@ class Play extends Phaser.Scene{
             loop: true,
             repeat: -1, 
         })
-        //this.spawnPlatforms()
+        
 
         this.platformSpeed = -50
         this.addSpeed = -5
@@ -71,6 +71,7 @@ class Play extends Phaser.Scene{
             loop: true,
         })
         
+        this.gameOver = false
         
     }
     
@@ -78,21 +79,17 @@ class Play extends Phaser.Scene{
     update(){
         
         this.playerFSM.step() 
-        if(Phaser.Input.Keyboard.JustDown(this.spaceKey)){
+        if(this.player.body.velocity.y < 0){
             this.spawnPlatform.destroy()
         }
-        //doesnt work
-        
         this.cleanUpPlatforms()
-        if(this.player.y > 300){ 
-            this.scene.restart() 
+        if(this.player.y > 600){ 
+            this.scene.start('gameOverScene')
         }
-            
-  
-
     }
 
-    addPlatform(x, y, width){
+   
+    addPlatform(x, y){
         const platform = this.platforms.create(x, y, 'platform')
     
         platform.body.setSize(platform.width, platform.height / 2)
@@ -104,7 +101,7 @@ class Play extends Phaser.Scene{
         
     }
     spawnPlatforms(){
-        this.addPlatform(this.cameras.main.width + 100, Phaser.Math.Between(this.cameras.main.height - 32, this.cameras.main.height - 90), Phaser.Math.Between(50, 200))
+        this.addPlatform(this.cameras.main.width + 100, Phaser.Math.Between(this.cameras.main.height - 32, this.cameras.main.height - 90))
 
         
     }
