@@ -8,6 +8,7 @@ class Menu extends Phaser.Scene{
     }
 
     create(){
+        
         this.cameras.main.setBackgroundColor("#88a7d4")
         
         this.menuTextGroup = this.add.group()

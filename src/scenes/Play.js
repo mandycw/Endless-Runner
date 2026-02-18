@@ -95,7 +95,7 @@ class Play extends Phaser.Scene{
         this.score += 1;
         this.scoreText.setText('Score: ' + Math.floor(this.score / 10));
     }
-        if(this.player.body.velocity.y < 0 || this.score > 300){
+        if(this.player.body.velocity.y < 0 || this.score > 350){
             this.spawnPlatform.destroy()
         }
         this.cleanUpPlatforms()
@@ -124,7 +124,7 @@ class Play extends Phaser.Scene{
     addPlatform(x, y){
         const platform = this.platforms.create(x, y, 'platform')
     
-        platform.body.setSize(platform.width/2, platform.height / 2)
+        platform.body.setSize(platform.width/1.75, platform.height / 2)
         platform.body.setVelocityX(this.platformSpeed)
 
         platform.body.checkCollision.left = false

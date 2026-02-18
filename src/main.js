@@ -1,6 +1,6 @@
 //Name: Mandy Cai
 //Title: Here Comes the Sun
-//Time: ~25 hours
+//Time: ~28 hours
 //Creative Tilt: changing tilemap after certain score and getting platforms to randomly spawn at the correct position with faster speed after certain times
 //               
 

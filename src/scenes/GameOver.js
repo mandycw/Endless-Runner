@@ -18,6 +18,7 @@ class GameOver extends Phaser.Scene {
         })
 
         this.input.keyboard.on('keydown-M', () => {
+            this.sound.stopAll()
             this.sound.play('select')
             this.scene.start('menuScene')
         })
