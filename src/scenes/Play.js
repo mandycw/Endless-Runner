@@ -9,28 +9,34 @@ class Play extends Phaser.Scene{
             frameHeight: 32,
         })
        this.load.image('platform', 'platform.png')
+
     }
     
 
     create(){
+        this.sound.stopAll()
         this.sound.play('bgmusic', {
         loop: true,
      })
         this.physics.world.gravity.y = 250 
-        const map = this.add.tilemap('tilemapJson')
-        const tileset = map.addTilesetImage('tilesheet', 'tilesetImg')
-        const sky = map.createLayer('Sky', tileset, 0, 0)
-        const weather = map.createLayer('Weather', tileset, 0, 0)
-        const sun = map.createLayer('Sun', tileset, 0, 0)
+        this.map = this.add.tilemap('tilemapJson')
+        const tileset = this.map.addTilesetImage('tilesheet', 'tilesetImg')
+        this.sky = this.map.createLayer('Sky', tileset, 0, 0)
+        this.weather = this.map.createLayer('Weather', tileset, 0, 0)
+        this.sun = this.map.createLayer('Sun', tileset, 0, 0)
+        
  
-        const playerSpawn = map.findObject('Spawnpoint', obj => obj.name === 'SpawnPoint')
+        const playerSpawn = this.map.findObject('Spawnpoint', obj => obj.name === 'SpawnPoint')
         this.player = new Player(this, playerSpawn.x, playerSpawn.y, 'player', 0, 'right')
         this.player.body.setCollideWorldBounds(false)
-
+        this.player.setDepth(10)
+        this.sky.setDepth(-1)
+        this.weather.setDepth(-1)
+        this.sun.setDepth(-1)
+       
         
-        
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels)
-        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels)
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
+        this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
         
         this.keys = this.input.keyboard.createCursorKeys()
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
@@ -45,19 +51,20 @@ class Play extends Phaser.Scene{
         this.spawnPlatform.body.setAllowGravity(false)
         this.spawnPlatform.body.setImmovable(true)
         this.physics.add.collider(this.player, this.spawnPlatform)
-
+        this.spawnPlatform.setDepth(2)
         this.platforms = this.physics.add.group({
             allowGravity: false,
             immovable: true
         })
         this.physics.add.collider(this.player, this.platforms)
-
+        this.platforms.setDepth(5)
         this.time.addEvent({
             delay: 1500,
             callback: this.spawnPlatforms.bind(this),
             loop: true,
             repeat: -1, 
         })
+        
         
 
         this.platformSpeed = -50
@@ -75,7 +82,9 @@ class Play extends Phaser.Scene{
         this.gameOver = false
 
         this.score = 0
-        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '14px', fill: '#000000'})
+        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '14px', fill: '#000000', fontFamily: 'Comic Sans MS'})
+        this.scoreText.setDepth(3)
+        this.mapChanged = false
         
     }
 
@@ -103,6 +112,12 @@ class Play extends Phaser.Scene{
 
             this.scene.start('gameOverScene', { score: finalScore })
         }
+
+        if (Math.floor(this.score / 10) >= 10 && !this.mapChanged) {
+            this.mapChanged = true
+            this.changeTilemap()
+        }
+        
     }
 
    
@@ -115,6 +130,7 @@ class Play extends Phaser.Scene{
         platform.body.checkCollision.left = false
         platform.body.checkCollision.right = false
         platform.body.checkCollision.down = false
+        platform.setDepth(3)
         
     }
     spawnPlatforms(){
@@ -128,6 +144,23 @@ class Play extends Phaser.Scene{
                 platform.destroy()
             }
         })
+    }
+
+    changeTilemap(){
+        this.sky.destroy()
+        this.weather.destroy()
+        this.sun.destroy()
+        this.map.destroy()
+
+        this.map = this.add.tilemap('nightmapJson')
+        const tileset2 = this.map.addTilesetImage('tilesheet', 'tilesetImg')
+
+        this.sky = this.map.createLayer('Sky', tileset2, 0, 0)
+        this.stars = this.map.createLayer('Stars', tileset2, 0, 0)
+        this.moon = this.map.createLayer('Moon', tileset2, 0, 0)
+
+        this.stars.setDepth(2)
+        this.moon.setDepth(3)
     }
     
 }

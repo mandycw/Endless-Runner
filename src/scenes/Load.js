@@ -13,6 +13,7 @@ class Load extends Phaser.Scene {
         
         this.load.image('tilesetImg', 'tilesheet.png')
         this.load.tilemapTiledJSON('tilemapJson', 'tilemap.json')
+        this.load.tilemapTiledJSON('nightmapJson', 'night.json')
         this.load.image('platform', 'platform.png')
         this.load.audio('menuStart', 'start.wav')
         this.load.audio('select', 'select.wav')
