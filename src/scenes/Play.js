@@ -95,7 +95,7 @@ class Play extends Phaser.Scene{
         this.score += 1;
         this.scoreText.setText('Score: ' + Math.floor(this.score / 10));
     }
-        if(this.player.body.velocity.y < 0){
+        if(this.player.body.velocity.y < 0 || this.score > 300){
             this.spawnPlatform.destroy()
         }
         this.cleanUpPlatforms()
@@ -113,7 +113,7 @@ class Play extends Phaser.Scene{
             this.scene.start('gameOverScene', { score: finalScore })
         }
 
-        if (Math.floor(this.score / 10) >= 10 && !this.mapChanged) {
+        if (Math.floor(this.score / 10) >= 300 && !this.mapChanged) {
             this.mapChanged = true
             this.changeTilemap()
         }
