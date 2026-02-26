@@ -95,7 +95,7 @@ class Play extends Phaser.Scene{
         this.score += 1;
         this.scoreText.setText('Score: ' + Math.floor(this.score / 10));
     }
-        if(this.player.body.velocity.y < 0 || this.score > 350){
+        if(this.player.body.velocity.y < 0 || this.score > 450){
             this.spawnPlatform.destroy()
         }
         this.cleanUpPlatforms()
