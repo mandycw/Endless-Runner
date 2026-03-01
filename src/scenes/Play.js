@@ -42,10 +42,10 @@ class Play extends Phaser.Scene{
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
  
-        this.input.keyboard.on('keydown-D', function() {
-            this.physics.world.drawDebug = this.physics.world.drawDebug ? false : true
-            this.physics.world.debugGraphic.clear() 
-        }, this)
+        // this.input.keyboard.on('keydown-D', function() {
+        //     this.physics.world.drawDebug = this.physics.world.drawDebug ? false : true
+        //     this.physics.world.debugGraphic.clear() 
+        // }, this)
 
         this.spawnPlatform = this.physics.add.image(playerSpawn.x , playerSpawn.y + 32, 'platform')
         this.spawnPlatform.body.setAllowGravity(false)
